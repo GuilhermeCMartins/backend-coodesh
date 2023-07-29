@@ -1,0 +1,49 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = "mysql://root:admin@localhost:3306/sales_db"
+}
+
+model Vendors {
+  Id           Int            @id @default(autoincrement())
+  Name         String         @unique @db.VarChar(30)
+  Password     String         @db.VarChar(100)
+  Type         VendorType
+  Transactions Transactions[]
+}
+
+enum VendorType {
+  Creator
+  Member
+}
+
+model Transactions {
+  Id                Int              @id @default(autoincrement())
+  MadeAt            DateTime
+  Price             Decimal          @db.Decimal(10, 2)
+  TransactionTypeId Int
+  TransactionType   TransactionTypes @relation(fields: [TransactionTypeId], references: [Id])
+  ProductId         Int
+  Product           Products         @relation(fields: [ProductId], references: [Id])
+  VendorId          Int
+  Vendor            Vendors          @relation(fields: [VendorId], references: [Id])
+}
+
+model TransactionTypes {
+  Id           Int            @id @default(autoincrement())
+  Description  String         @db.VarChar(100)
+  Inbound      Boolean
+  Transactions Transactions[]
+}
+
+model Products {
+  Id           Int            @id @default(autoincrement())
+  Name         String         @unique
+  Description  String         @db.VarChar(100)
+  Quantity     Int
+  Price        Decimal        @db.Decimal(10, 2)
+  Transactions Transactions[]
+}
