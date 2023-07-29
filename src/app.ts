@@ -5,7 +5,7 @@ import router from './routes/router';
 import TransactionController from './controllers/TransactionController';
 import http from 'http';
 import setupSwagger from './swagger/swagger';
-
+import cors from 'cors';
 
 
 class Server {
@@ -29,6 +29,7 @@ class Server {
     }
 
     private config() {
+        this.app.use(cors());
         this.app.use(bodyParser.urlencoded({ extended: true }));
         this.app.use(bodyParser.json({ limit: '1mb' }));
 

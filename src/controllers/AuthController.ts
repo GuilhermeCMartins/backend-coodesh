@@ -42,7 +42,7 @@ class AuthController {
 
             const vendor = await prisma.vendors.findFirst({ where: { Name: name } });
             if (!vendor) {
-                return res.status(401).json({ message: 'Authentication failed. Vendor does not exists' });
+                return res.status(401).json({ message: 'Authentication failed. Vendor does not exist' });
             }
 
             const isPasswordValid = await bcrypt.compare(password, vendor.Password);
@@ -52,12 +52,18 @@ class AuthController {
 
             const token = jwt.sign({ vendorId: vendor.Id }, secretKey, { expiresIn: '1h' });
 
-            res.status(200).json({ message: 'Authentication successful', token });
+            res.status(200).json({
+                message: 'Authentication successful',
+                token,
+                name: vendor.Name,
+                type: vendor.Type,
+            });
         } catch (error) {
             console.error('Error while authenticating vendor:', error);
             res.status(500).json({ message: 'Internal server error' });
         }
     }
+
 
     async protectedRoute(req: CustomRequest, res: Response) {
         try {
