@@ -43,5 +43,6 @@ function formatValueToReal(valueString: string) {
 
 export {
     isValidData,
-    formatValueToReal
+    formatValueToReal,
+    isValidISODate
 }

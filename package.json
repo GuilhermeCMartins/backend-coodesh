@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "tsc && node dist/src/app.js",
+    "test": "jest",
     "build": "tsc"
   },
   "keywords": [],

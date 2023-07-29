@@ -124,10 +124,11 @@ const router = Router();
  *         description: Sucesso
  *       400:
  *         description: Arquivo não fornecido ou formato inválido
+ */
 
 /**
  * @swagger
- * /api/transactions/vendor/{vendorName*}:
+ * /api/transactions/vendor/{vendorName}:
  *   get:
  *     summary: Obter todas as transações de um fornecedor específico
  *     tags: [Transaction]
