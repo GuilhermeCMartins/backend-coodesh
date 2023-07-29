@@ -1,6 +1,6 @@
 # Backend Coodesh
 
-[![Coverage Status](https://coveralls.io/repos/github/GuilhermeCMartins/backend-coodesh/badge.svg?branch=master)](https://coveralls.io/github/GuilhermeCMartins/backend-coodesh?branch=master)
+[![codecov](https://codecov.io/gh/GuilhermeCMartins/backend-coodesh/branch/master/graph/badge.svg)](https://codecov.io/gh/GuilhermeCMartins/backend-coodesh)
 
 description -> todo
 
