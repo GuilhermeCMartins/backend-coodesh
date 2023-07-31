@@ -3,14 +3,14 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = "mysql://root:admin@localhost:3306/sales_db"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Vendors {
   Id           Int            @id @default(autoincrement())
-  Name         String         @unique @db.VarChar(30)
-  Password     String         @db.VarChar(100)
+  Name         String         @unique
+  Password     String
   Type         VendorType
   Transactions Transactions[]
 }
@@ -18,6 +18,7 @@ model Vendors {
 enum VendorType {
   Creator
   Member
+  Admin
 }
 
 model Transactions {
@@ -34,7 +35,7 @@ model Transactions {
 
 model TransactionTypes {
   Id           Int            @id @default(autoincrement())
-  Description  String         @db.VarChar(100)
+  Description  String
   Inbound      Boolean
   Transactions Transactions[]
 }
@@ -42,7 +43,7 @@ model TransactionTypes {
 model Products {
   Id           Int            @id @default(autoincrement())
   Name         String         @unique
-  Description  String         @db.VarChar(100)
+  Description  String
   Quantity     Int
   Price        Decimal        @db.Decimal(10, 2)
   Transactions Transactions[]

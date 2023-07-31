@@ -1,12 +1,16 @@
-FROM node:12-alpine
+FROM node:alpine
 
-RUN mkdir -p /usr/app
-WORKDIR /usr/app
-COPY package.json tsconfig.json wait.sh ./
-COPY src ./src
-ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.2.1/wait /wait
-RUN chmod +x /wait
-RUN npm install 
+RUN apk --no-cache add git
 
-EXPOSE 4000
-CMD /wait && npm start
+WORKDIR /app
+
+COPY package*.json ./
+COPY prisma ./prisma/
+COPY .env ./
+COPY tsconfig.json ./
+COPY . .
+
+RUN npm install
+RUN npx prisma generate
+
+

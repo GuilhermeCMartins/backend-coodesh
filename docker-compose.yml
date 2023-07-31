@@ -1,30 +1,61 @@
-version: "3.8"
+version: "3.9"
 services:
-  postgres:
+  db:
+    image: postgres:latest
     container_name: postgres
-    image: postgres:10.4
+    hostname: postgres
     ports:
-      - "5432:5432"
-    volumes:
-      - ./postgresdata:/var/lib/postgresql/data
-      - ./src/migrations/dbinit.sql:/docker-entrypoint-initdb.d/dbinit.sql
-    restart: always
+      - 5432:5432
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: test-db
-  pgadmin:
-    image: dpage/pgadmin4:latest
-    container_name: pgadmin4
-    restart: always
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: admin
-    ports:
-      - "8080:80"
+      POSTGRES_DB: sales_db
     volumes:
-      - pgadmin_data:/var/lib/pgadmin
+      - postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
+    networks:
+      - frontend_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    depends_on:
+      - db
+    ports:
+      - "5555:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
+      PGADMIN_DEFAULT_PASSWORD: admin
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    restart: unless-stopped
+    networks:
+      - frontend_network
+
+  api:
+    stdin_open: true
+    build:
+      context: .
+      dockerfile: .Dockerfile
+    container_name: nodejs
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "4000:4000"
+    restart: always
+    networks:
+      - frontend_network
+    command: su -c "npx prisma migrate dev --name init && npm start"
 
 volumes:
-  pg_data:
-  pgadmin_data:
+  postgres-data:
+  pgadmin-data:
+
+networks:
+  frontend_network:

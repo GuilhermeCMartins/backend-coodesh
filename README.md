@@ -1,8 +1,8 @@
 # Backend Coodesh
 
-[![Coverage Status](https://coveralls.io/repos/github/GuilhermeCMartins/backend-coodesh/badge.svg?branch=master)](https://coveralls.io/github/GuilhermeCMartins/backend-coodesh?branch=master)
+[![codecov](https://codecov.io/gh/GuilhermeCMartins/backend-coodesh/branch/master/graph/badge.svg)](https://codecov.io/gh/GuilhermeCMartins/backend-coodesh)
 
-description -> todo
+Test for Full-stack position at 'Marcenaria Diferente' by Coodesh
 
 ## Technologies Used
 
@@ -15,10 +15,17 @@ This project was built using the following technologies:
 [![MySQL](https://img.shields.io/badge/MySQL-v8-blue.svg)](https://www.mysql.com/)
 [![Docker](https://img.shields.io/badge/Docker-latest-blue.svg)](https://www.docker.com/)
 
-
 ## Description
 
-description -> todo
+This project involves creating a web interface to enable customers to upload transaction files for product sales. The platform follows a creator-affiliate model, where creators can sell products, and affiliates earn commissions. The main task is to normalize and store the data in a relational database. The 'sales.txt' file will be used for testing, adhering to the format provided in the 'Input File Format' section.
+
+## Documentation
+
+The API documentation for this backend is available using Swagger. You can access the Swagger documentation by visiting the following URL:
+
+```
+   http://localhost:4000/api-docs
+```
 
 ## Getting Started
 
@@ -27,6 +34,7 @@ Follow these instructions to get a copy of the project up and running on your lo
 ### Prerequisites
 
 List any prerequisites or software that needs to be installed before setting up the project. For example:
+
 - Node.js and npm
 - Docker (if using Docker for containerization)
 - MySQL (if using a local database)
@@ -34,22 +42,43 @@ List any prerequisites or software that needs to be installed before setting up 
 ### Installing
 
 1. Clone the repository:
-  git clone https://github.com/your-username/your-repository.git
-  cd your-repository
+
+   ```
+      git clone https://github.com/GuilhermeCMartins/backend-coodesh.git
+      cd backend-coodesh
+   ```
 
 2. Install dependencies:
-  npm install
+
+   ```
+      npm install
+   ```
 
 3. Configuration:
+   if you're using MySql, just need to change on .env your connection string
 
-Explain any configuration steps needed, such as setting up environment variables, database configurations, etc.
+   ```
+      datasource db {
+         provider = "mysql"
+         url = env("DATABASE_URL")
+      }
+   ```
 
-4. Database Setup (if applicable):
+4. Database Setup:
+   for the first time using, you need to run the first migration
 
-Explain how to set up the database, migrations, or any other necessary steps.
+   ```
+    npx prisma migrate dev --name init
+   ```
 
 5. Run the application:
 
+   ```
+      npm start
+   ```
+
 If you are using Docker, you can run the application with:
 
-docker-compose up
+```
+   docker-compose up
+```

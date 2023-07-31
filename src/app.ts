@@ -29,7 +29,11 @@ class Server {
     }
 
     private config() {
-        this.app.use(cors());
+        this.app.use(cors({
+            origin: '*',
+            methods: 'GET,PUT,POST,DELETE',
+            allowedHeaders: 'Content-Type,Authorization',
+        }));
         this.app.use(bodyParser.urlencoded({ extended: true }));
         this.app.use(bodyParser.json({ limit: '1mb' }));
 

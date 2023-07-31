@@ -50,7 +50,7 @@ class AuthController {
                 return res.status(401).json({ message: 'Authentication failed. Invalid credentials' });
             }
 
-            const token = jwt.sign({ vendorId: vendor.Id }, secretKey, { expiresIn: '1h' });
+            const token = jwt.sign({ vendorName: vendor.Name }, secretKey, { expiresIn: '1h' });
 
             res.status(200).json({
                 message: 'Authentication successful',
