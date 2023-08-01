@@ -88,7 +88,7 @@ describe('AuthController', () => {
             await AuthController.login(mockRequest as Request, mockResponse as Response);
 
             expect(mockResponse.status).toHaveBeenCalledWith(401);
-            expect(mockResponse.json).toHaveBeenCalledWith({ message: 'Authentication failed. Vendor does not exists' });
+            expect(mockResponse.json).toHaveBeenCalledWith({ message: 'Authentication failed. Vendor does not exist' });
         });
 
         it('should return 401 if invalid credentials', async () => {
@@ -122,7 +122,7 @@ describe('AuthController', () => {
             await AuthController.login(mockRequest as Request, mockResponse as Response);
 
             expect(mockResponse.status).toHaveBeenCalledWith(200);
-            expect(mockResponse.json).toHaveBeenCalledWith({ message: 'Authentication successful', token: 'validToken' });
+            expect(mockResponse.json).toHaveBeenCalledWith({ message: 'Authentication successful', name: "existingVendor", type: undefined, token: 'validToken' });
         });
     });
 

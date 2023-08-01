@@ -31,7 +31,6 @@ class AuthController {
 
             res.status(201).json({ message: 'Vendor registered successfully', vendorId: newVendor.Id });
         } catch (error) {
-            console.error('Error while registering vendor:', error);
             res.status(500).json({ message: 'Internal server error' });
         }
     }
