@@ -30,6 +30,7 @@ const router = Router();
  *             example:
  *               username: usuario123
  *               password: senha123
+ *               type: admin
  *     responses:
  *       200:
  *         description: Sucesso
